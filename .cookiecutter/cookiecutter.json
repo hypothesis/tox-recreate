@@ -1,0 +1,19 @@
+{
+  "template": "https://github.com/hypothesis/cookiecutters",
+  "directory": "pypackage",
+  "ignore": ["INSTALL.md"],
+  "extra_context": {
+    "name": "tox-recreate",
+    "package_name": "tox_recreate",
+    "slug": "tox-recreate",
+    "short_description": "Recreate tox virtual environments when setup.cfg changes.",
+    "python_versions": "3.10.4, 3.9.12, 3.8.13",
+    "github_owner": "hypothesis",
+    "copyright_holder": "Hypothesis",
+    "public": "yes",
+    "console_script": "no",
+    "__entry_point": "tox-recreate",
+    "__github_url": "https://github.com/hypothesis/tox-recreate",
+    "__pypi_url": "https://pypi.org/project/tox-recreate"
+  }
+}

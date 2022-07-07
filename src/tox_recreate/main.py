@@ -27,12 +27,6 @@ def cached_hashes(envconfig):
 
 
 @lru_cache
-def cached_hash(envconfig, path):
-    """Return envconfig's cached hash for `path` or None."""
-    return cached_hashes(envconfig).get(path)
-
-
-@lru_cache
 def current_hash(path):
     """Return the current hash of the file at `path`."""
     hashobj = sha512()
@@ -50,7 +44,7 @@ def tox_configure(config):
         if envconfig.envname not in config.envlist:
             continue
 
-        if cached_hash(envconfig, "setup.cfg") != current_hash("setup.cfg"):
+        if cached_hashes(envconfig).get("setup.cfg") != current_hash("setup.cfg"):
             envconfig.recreate = True
 
     return config
@@ -64,7 +58,7 @@ def tox_runtest_pre(venv):
     if not envconfig.recreate:
         return
 
-    if cached_hash(envconfig, "setup.cfg") != current_hash("setup.cfg"):
+    if cached_hashes(envconfig).get("setup.cfg") != current_hash("setup.cfg"):
         cached_hashes_ = cached_hashes(envconfig)
         cached_hashes_["setup.cfg"] = current_hash("setup.cfg")
         with open(cached_hashes_path(envconfig), "w", encoding="utf8") as file:

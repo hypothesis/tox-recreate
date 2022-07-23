@@ -18,10 +18,8 @@ def cached_hashes_path(envconfig):
 def cached_hashes(envconfig):
     """Return envconfig's cached hashes dict."""
     try:
-        with open(
-            cached_hashes_path(envconfig), "r", encoding="utf8"
-        ) as cached_hashes_file:
-            return json.load(cached_hashes_file)
+        with open(cached_hashes_path(envconfig), "r", encoding="utf8") as file:
+            return json.load(file)
     except FileNotFoundError:
         return {}
 

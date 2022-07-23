@@ -15,7 +15,7 @@ def cached_hashes_path(envconfig):
 
 
 @lru_cache
-def cached_hashes(envconfig):
+def get_cached_hashes(envconfig):
     """Return envconfig's cached hashes dict."""
     try:
         with open(cached_hashes_path(envconfig), "r", encoding="utf8") as file:
@@ -35,6 +35,11 @@ def current_hash(path):
     return hashobj.hexdigest()
 
 
+def has_changed(envconfig, path):
+    """Return True if the file at `path` has changed since `envconfig` was last run."""
+    return get_cached_hashes(envconfig).get(path) != current_hash(path):
+
+
 @hookimpl
 def tox_configure(config):
     """Trigger recreation of the venvs if setup.cfg has changed."""
@@ -42,7 +47,7 @@ def tox_configure(config):
         if envconfig.envname not in config.envlist:
             continue
 
-        if cached_hashes(envconfig).get("setup.cfg") != current_hash("setup.cfg"):
+        if has_changed(envconfig, "setup.cfg"):
             envconfig.recreate = True
 
     return config
@@ -56,8 +61,8 @@ def tox_runtest_pre(venv):
     if not envconfig.recreate:
         return
 
-    if cached_hashes(envconfig).get("setup.cfg") != current_hash("setup.cfg"):
-        cached_hashes_ = cached_hashes(envconfig)
-        cached_hashes_["setup.cfg"] = current_hash("setup.cfg")
+    if has_changed(envconfig, "setup.cfg"):
+        cached_hashes = get_cached_hashes(envconfig)
+        cached_hashes["setup.cfg"] = current_hash("setup.cfg")
         with open(cached_hashes_path(envconfig), "w", encoding="utf8") as file:
-            json.dump(cached_hashes_, file)
+            json.dump(cached_hashes, file)

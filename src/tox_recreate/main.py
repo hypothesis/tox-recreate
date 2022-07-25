@@ -37,7 +37,7 @@ def current_hash(path):
 
 def has_changed(envconfig, path):
     """Return True if the file at `path` has changed since `envconfig` was last run."""
-    return get_cached_hashes(envconfig).get(path) != current_hash(path):
+    return get_cached_hashes(envconfig).get(path) != current_hash(path)
 
 
 @hookimpl

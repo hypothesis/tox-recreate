@@ -1,4 +1,3 @@
-import json
 from functools import lru_cache
 from hashlib import sha512
 from pathlib import Path
@@ -9,31 +8,30 @@ hookimpl = pluggy.HookimplMarker("tox")
 
 
 @lru_cache
-def cached_hashes_path(envconfig):
-    """Return the path to envconfig's cached hashes file."""
-    return Path(envconfig.envdir) / "tox_recreate.json"
+def cached_hash_path(envconfig):
+    """Return the path to envconfig's cached hash file."""
+    return Path(envconfig.envdir) / "tox_recreate.hash"
 
 
 @lru_cache
-def cached_hashes(envconfig):
-    """Return envconfig's cached hashes dict."""
+def cached_hash(envconfig):
+    """Return envconfig's cached hash."""
     try:
-        with open(
-            cached_hashes_path(envconfig), "r", encoding="utf8"
-        ) as cached_hashes_file:
-            return json.load(cached_hashes_file)
+        return cached_hash_path(envconfig).read_text()
     except FileNotFoundError:
-        return {}
+        return None
+
+
+def get_setup_cfg_path():  # pragma: no cover
+    """Return the path to the project's setup.cfg file."""
+    return Path("setup.cfg")
 
 
 @lru_cache
-def current_hash(path):
-    """Return the current hash of the file at `path`."""
+def current_hash():
+    """Return the current hash of the setup.cfg file."""
     hashobj = sha512()
-
-    with open(path, "rb") as file:
-        hashobj.update(file.read())
-
+    hashobj.update(get_setup_cfg_path().read_bytes())
     return hashobj.hexdigest()
 
 
@@ -44,7 +42,7 @@ def tox_configure(config):
         if envconfig.envname not in config.envlist:
             continue
 
-        if cached_hashes(envconfig).get("setup.cfg") != current_hash("setup.cfg"):
+        if cached_hash(envconfig) != current_hash():
             envconfig.recreate = True
 
     return config
@@ -53,13 +51,7 @@ def tox_configure(config):
 @hookimpl
 def tox_runtest_pre(venv):
     """Cache setup.cfg's hash in the venv for next time."""
-    envconfig = venv.envconfig
-
-    if not envconfig.recreate:
+    if not venv.envconfig.recreate:
         return
 
-    if cached_hashes(envconfig).get("setup.cfg") != current_hash("setup.cfg"):
-        cached_hashes_ = cached_hashes(envconfig)
-        cached_hashes_["setup.cfg"] = current_hash("setup.cfg")
-        with open(cached_hashes_path(envconfig), "w", encoding="utf8") as file:
-            json.dump(cached_hashes_, file)
+    cached_hash_path(venv.envconfig).write_text(current_hash())

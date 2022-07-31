@@ -1,7 +1,7 @@
 {
   "template": "https://github.com/hypothesis/cookiecutters",
   "directory": "pypackage",
-  "ignore": ["INSTALL.md"],
+  "ignore": ["src/tox_recreate/core.py", "tests/unit/tox_recreate/core_test.py"],
   "extra_context": {
     "name": "tox-recreate",
     "package_name": "tox_recreate",

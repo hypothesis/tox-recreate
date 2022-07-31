@@ -1,1 +1,1 @@
-from tox_recreate.main import tox_configure, tox_runtest_pre
+from tox_recreate.plugin import tox_configure, tox_runtest_pre

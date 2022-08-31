@@ -7,13 +7,13 @@ import pluggy
 hookimpl = pluggy.HookimplMarker("tox")
 
 
-@lru_cache
+@lru_cache(maxsize=None)
 def cached_hash_path(envconfig):
     """Return the path to envconfig's cached hash file."""
     return Path(envconfig.envdir) / "tox_recreate.hash"
 
 
-@lru_cache
+@lru_cache(maxsize=None)
 def cached_hash(envconfig):
     """Return envconfig's cached hash."""
     try:
@@ -27,7 +27,7 @@ def get_setup_cfg_path():  # pragma: no cover
     return Path("setup.cfg")
 
 
-@lru_cache
+@lru_cache(maxsize=None)
 def current_hash():
     """Return the current hash of the setup.cfg file."""
     hashobj = sha512()

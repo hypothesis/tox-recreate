@@ -135,4 +135,4 @@ score = "no"
 
 [tool.hdev]
 project_name = "tox-recreate"
-project_type = "package"
+project_type = "library"

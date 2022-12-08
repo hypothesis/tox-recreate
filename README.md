@@ -39,7 +39,7 @@ Then to set up your development environment:
 
 ```terminal
 git clone https://github.com/hypothesis/tox-recreate.git
-cd tox_recreate
+cd tox-recreate
 make help
 ```
 

@@ -1,4 +1,3 @@
-
 tox-recreate causes tox to recreate its virtualenv's if your `setup.cfg` file has changed.
 
 Normally tox will automatically trigger a recreation of the venv if the test

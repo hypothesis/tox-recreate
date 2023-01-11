@@ -19,6 +19,7 @@
     "__entry_point": "tox-recreate",
     "__github_url": "https://github.com/hypothesis/tox-recreate",
     "__pypi_url": "https://pypi.org/project/tox-recreate",
-    "__copyright_year": "2022"
+    "__copyright_year": "2022",
+    "pypi": "yes"
   }
 }

@@ -1,4 +1,4 @@
-<a href="https://github.com/hypothesis/tox-recreate/actions/workflows/ci.yml?query=branch%3Amain"><img src="https://img.shields.io/github/workflow/status/hypothesis/tox-recreate/CI/main"></a>
+<a href="https://github.com/hypothesis/tox-recreate/actions/workflows/ci.yml?query=branch%3Amain"><img src="https://img.shields.io/github/actions/workflow/status/hypothesis/tox-recreate/ci.yml?branch=main"></a>
 <a href="https://pypi.org/project/tox-recreate"><img src="https://img.shields.io/pypi/v/tox-recreate"></a>
 <a><img src="https://img.shields.io/badge/python-3.10 | 3.9 | 3.8 | 3.7-success"></a>
 <a href="https://github.com/hypothesis/tox-recreate/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-BSD--2--Clause-success"></a>

@@ -1,0 +1,2 @@
+[project.entry-points."tox"]
+tox-recreate = "tox_recreate"

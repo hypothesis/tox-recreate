@@ -18,8 +18,8 @@ class TestToxConfigure:
 
         assert config.envconfigs["test"].recreate is True
 
-    def test_when_the_hash_matches(self, config, cached_hash_path, setup_cfg_hash):
-        cached_hash_path.write_text(setup_cfg_hash)
+    def test_when_the_hash_matches(self, config, cached_hash_path, expected_hash):
+        cached_hash_path.write_text(expected_hash)
 
         plugin.tox_configure(config)
 
@@ -44,12 +44,12 @@ class TestToxConfigure:
 
 
 class TestToxRuntestPre:
-    def test_it_caches_the_hash(self, setup_cfg_hash, venv):
+    def test_it_caches_the_hash(self, expected_hash, venv):
         venv.envconfig.recreate = True
 
         plugin.tox_runtest_pre(venv)
 
-        assert get_cached_hash_path(venv.envconfig).read_text() == setup_cfg_hash
+        assert get_cached_hash_path(venv.envconfig).read_text() == expected_hash
 
     def test_it_doesnt_cache_the_hash_if_the_venv_wasnt_updated(self, venv):
         plugin.tox_runtest_pre(venv)
@@ -92,12 +92,27 @@ def get_setup_cfg_path(mocker, tmp_path):
 
 
 @pytest.fixture(autouse=True)
+def get_pyrpoject_toml_path(mocker, tmp_path):
+    """Patch plugin.py so that it reads the test pyproject.toml file."""
+    return mocker.patch(
+        "tox_recreate.plugin.get_pyproject_toml_path",
+        return_value=tmp_path / "pyproject.toml",
+    )
+
+
+@pytest.fixture(autouse=True)
 def setup_cfg(get_setup_cfg_path):
     """Create the test setup.cfg file."""
     get_setup_cfg_path.return_value.write_text("test setup.cfg file contents")
 
 
+@pytest.fixture(autouse=True)
+def pyproject_toml(get_pyrpoject_toml_path):
+    """Create the test pyproject.toml file."""
+    get_pyrpoject_toml_path.return_value.write_text("test pyproject.toml file contents")
+
+
 @pytest.fixture
-def setup_cfg_hash():
-    """Return the correct hash of the test setup.cfg file."""
-    return "2b992577b54607f693980706d0dc119ff9d109544f4428499ef69b20c0b09ee6e400a4dc7ef208cc29c2b919e017260671a35e5b5fc40398f24e62301a9f2f3a"
+def expected_hash():
+    """Return the correct hash of the test setup.cfg and pyproject.toml files."""
+    return "5373103a9c1d50997e43b9f007a1448f22c12d5e55314a85cf9674496b84e1eb68ae1bd24a776a862765f51824afe4219e7b91a50335bde900d3d4b04f194144"

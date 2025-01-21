@@ -20,8 +20,8 @@ dependencies = [
 Repository = "https://github.com/hypothesis/tox-recreate"
 Issues = "https://github.com/hypothesis/tox-recreate/issues"
 Changelog = "https://github.com/hypothesis/tox-recreate/releases"
-[tool.setuptools_scm]
 
+[tool.setuptools_scm]
 
 [project.entry-points."tox"]
 tox-recreate = "tox_recreate"

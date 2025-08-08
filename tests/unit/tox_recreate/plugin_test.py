@@ -99,6 +99,14 @@ def get_pyrpoject_toml_path(mocker, tmp_path):
         return_value=tmp_path / "pyproject.toml",
     )
 
+@pytest.fixture(autouse=True)
+def get_setup_py_path(mocker, tmp_path):
+    """Patch plugin.py so that it reads the test setup.py file."""
+    return mocker.patch(
+        "tox_recreate.plugin.get_setup_py_path",
+        return_value=tmp_path / "setup.py",
+    )
+
 
 @pytest.fixture(autouse=True)
 def setup_cfg(get_setup_cfg_path):
@@ -112,7 +120,13 @@ def pyproject_toml(get_pyrpoject_toml_path):
     get_pyrpoject_toml_path.return_value.write_text("test pyproject.toml file contents")
 
 
+@pytest.fixture(autouse=True)
+def setup_py(get_setup_py_path):
+    """Create the test setup.py file."""
+    get_setup_py_path.return_value.write_text("test setup.py file contents")
+
+
 @pytest.fixture
 def expected_hash():
-    """Return the correct hash of the test setup.cfg and pyproject.toml files."""
+    """Return the correct hash of the test setup.cfg and pyproject.toml and setup.py files."""
     return "5373103a9c1d50997e43b9f007a1448f22c12d5e55314a85cf9674496b84e1eb68ae1bd24a776a862765f51824afe4219e7b91a50335bde900d3d4b04f194144"

@@ -32,6 +32,11 @@ def get_pyproject_toml_path():  # pragma: no cover
     return Path("pyproject.toml")
 
 
+def get_setup_py_path():  # pragma: no cover
+    """Return the path to the project's pyproject.toml file."""
+    return Path("setup.py")
+
+
 @lru_cache(maxsize=None)
 def current_hash():
     """Return the current hash of the setup.cfg file."""
@@ -44,6 +49,11 @@ def current_hash():
 
     try:
         hashobj.update(get_pyproject_toml_path().read_bytes())
+    except FileNotFoundError:  # pragma: no cover
+        pass
+
+    try:
+        hashobj.update(get_setup_py_path().read_bytes())
     except FileNotFoundError:  # pragma: no cover
         pass
 

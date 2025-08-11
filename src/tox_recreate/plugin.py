@@ -33,7 +33,7 @@ def get_pyproject_toml_path():  # pragma: no cover
 
 
 def get_setup_py_path():  # pragma: no cover
-    """Return the path to the project's pyproject.toml file."""
+    """Return the path to the project's setup.py file."""
     return Path("setup.py")
 
 

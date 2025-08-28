@@ -130,4 +130,4 @@ def setup_py(get_setup_py_path):
 @pytest.fixture
 def expected_hash():
     """Return the correct hash of the test setup.cfg and pyproject.toml and setup.py files."""
-    return "5373103a9c1d50997e43b9f007a1448f22c12d5e55314a85cf9674496b84e1eb68ae1bd24a776a862765f51824afe4219e7b91a50335bde900d3d4b04f194144"
+    return "c04ff9e846c2747925e4add0c8b7bfb236194f18b2f5e91b0d4d9259081ef2616355128d3b03513c2ca8179756e4563db5086c0a86542003b1411123f83d5a2c"

@@ -34,9 +34,14 @@ checkformatting: python
 	@pyenv exec tox -qe checkformatting
 
 .PHONY: test
-$(call help,make test,"run the unit tests in Python 3.12")
+$(call help,make test,"run the unit tests in Python 3.13")
 test: python
 	@pyenv exec tox -qe tests
+
+.PHONY: test-py312
+$(call help,make test-py312,"run the unit tests in Python 3.12")
+test-py312: python
+	@pyenv exec tox -qe py312-tests
 
 .PHONY: test-py311
 $(call help,make test-py311,"run the unit tests in Python 3.11")
@@ -56,12 +61,17 @@ test-py39: python
 .PHONY: coverage
 $(call help,make coverage,"run the tests and print the coverage report")
 coverage: python
-	@pyenv exec tox --parallel -qe 'tests,py{311,310,39}-tests,coverage'
+	@pyenv exec tox --parallel -qe 'tests,py{312,311,310,39}-tests,coverage'
 
 .PHONY: functests
-$(call help,make functests,"run the functional tests in Python 3.12")
+$(call help,make functests,"run the functional tests in Python 3.13")
 functests: python
 	@pyenv exec tox -qe functests
+
+.PHONY: functests-py312
+$(call help,make functests-py312,"run the functional tests in Python 3.12")
+functests-py312: python
+	@pyenv exec tox -qe py312-functests
 
 .PHONY: functests-py311
 $(call help,make functests-py311,"run the functional tests in Python 3.11")
@@ -82,7 +92,7 @@ functests-py39: python
 $(call help,make sure,"make sure that the formatting$(comma) linting and tests all pass")
 sure: python
 sure:
-	@pyenv exec tox --parallel -qe 'checkformatting,lint,typecheck,tests,py{311,310,39}-tests,coverage,functests,py{311,310,39}-functests'
+	@pyenv exec tox --parallel -qe 'checkformatting,lint,typecheck,tests,py{312,311,310,39}-tests,coverage,functests,py{312,311,310,39}-functests'
 
 .PHONY: template
 $(call help,make template,"update from the latest cookiecutter template")

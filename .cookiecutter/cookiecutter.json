@@ -10,7 +10,7 @@
     "package_name": "tox_recreate",
     "slug": "tox-recreate",
     "short_description": "Recreate tox virtual environments when `pyproject.toml`, `setup.cfg` or `setup.py` change.",
-    "python_versions": "3.12.7, 3.11.10, 3.10.15, 3.9.20",
+    "python_versions": "3.13.7, 3.12.11, 3.11.13, 3.10.18, 3.9.23",
     "github_owner": "hypothesis",
     "copyright_holder": "Hypothesis",
     "public": "yes",

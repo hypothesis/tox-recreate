@@ -99,6 +99,7 @@ def get_pyrpoject_toml_path(mocker, tmp_path):
         return_value=tmp_path / "pyproject.toml",
     )
 
+
 @pytest.fixture(autouse=True)
 def get_setup_py_path(mocker, tmp_path):
     """Patch plugin.py so that it reads the test setup.py file."""

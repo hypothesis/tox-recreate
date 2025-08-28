@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 dynamic = ["version"]
 name = "tox-recreate"
-description = "Recreate tox virtual environments when setup.cfg changes."
+description = "Recreate tox virtual environments when `pyproject.toml`, `setup.cfg` or `setup.py` change."
 readme = "README.md"
 classifiers = [
     "Programming Language :: Python :: 3",
